@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3 - Functions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #gameStatus {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 24px;
+            text-align: center;
+            min-height: 100px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .red {
+            background-color: #f44336;
+        }
+        .red:hover {
+            background-color: #da190b;
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Task 3: Functions - Reusable Code Blocks</h1>
+    <p>Functions are like recipes - write once, use many times!</p>
+
+    <div id="gameStatus">Press a button to see functions in action!</div>
+    
+    <div style="text-align: center;">
+        <button onclick="startGame()">🎮 Start Game</button>
+        <button onclick="addPoints(10)">+10 Points</button>
+        <button onclick="addPoints(50)">+50 Points</button>
+        <button class="red" onclick="endGame()">🛑 End Game</button>
+    </div>
+    
+    <div class="info">
+        <h3>📖 How Functions Work:</h3>
+        <p>1. <strong>Define</strong> the function (write the recipe)</p>
+        <p>2. <strong>Call</strong> the function (use the recipe)</p>
+        <p>3. Functions can <strong>accept inputs</strong> (parameters)</p>
+        <p>4. Functions can <strong>return outputs</strong> (results)</p>
+    </div>
+
+    <script>
+        let gameScore = 0;
+        let isPlaying = false;
+        
+        // ===== EXAMPLE FUNCTIONS =====
+        
+        // Function with NO parameters
+        function startGame() {
+            isPlaying = true;
+            gameScore = 0;
+            
+            document.getElementById("gameStatus").innerHTML = 
+                "🎮 Game Started!<br>Score: " + gameScore;
+            
+            console.log("✅ Game Started!");
+            console.log("Score reset to:", gameScore);
+            
+            return true;  // Returns a value
+        }
+        
+        // Function WITH a parameter
+        function addPoints(points) {
+            if (!isPlaying) {
+                alert("Start the game first!");
+                return;
+            }
+            
+            gameScore += points;  // Add points to score
+            
+            document.getElementById("gameStatus").innerHTML = 
+                "⭐ Score: " + gameScore + "<br>+" + points + " points!";
+            
+            console.log("Added", points, "points. New score:", gameScore);
+            
+            return gameScore;  // Return the new score
+        }
+        
+        // Function that ends the game
+        function endGame() {
+            isPlaying = false;
+            
+            document.getElementById("gameStatus").innerHTML = 
+                "🏁 Game Over!<br>Final Score: " + gameScore;
+            
+            console.log("❌ Game Ended. Final score:", gameScore);
+            
+            return gameScore;
+        }
+        
+        // ===== 🎯 YOUR TURN! =====
+        // 
+        // CHALLENGE 1: Create a calculateBonus() function
+        // STEP 1: Uncomment the function below
+        // STEP 2: Start the game and add points (use buttons above)
+        // STEP 3: In console, type: calculateBonus()
+        // STEP 4: You should see your score doubled!
+        
+        // function calculateBonus() {
+        //     let bonus = gameScore * 2;
+        //     console.log("💰 Bonus calculated:", bonus);
+        //     return bonus;
+        // }
+        //
+        // ✅ TASK COMPLETE: When you can call calculateBonus() in console!
+        
+        // 2. Create a function called checkHighScore(score)
+        //    It should check if score > 100 and return true/false
+        
+        // function checkHighScore(score) {
+        //     if (score > 100) {
+        //         console.log("🏆 New high score!");
+        //         return true;
+        //     } else {
+        //         console.log("Keep playing!");
+        //         return false;
+        //     }
+        // }
+        
+        // 3. Test your functions:
+        // let bonus = calculateBonus();
+        // let isHigh = checkHighScore(gameScore);
+        
+        // ===== DIFFERENT FUNCTION SYNTAXES =====
+        
+        // Traditional function
+        function greet1(name) {
+            return "Hello, " + name;
+        }
+        
+        // Arrow function (modern way)
+        const greet2 = (name) => {
+            return "Hello, " + name;
+        };
+        
+        // Short arrow function (one line)
+        const greet3 = (name) => "Hello, " + name;
+        
+        console.log("\n=== Function Syntaxes ===");
+        console.log(greet1("Player"));
+        console.log(greet2("Player"));
+        console.log(greet3("Player"));
+        
+    </script>
+</body>
+</html>

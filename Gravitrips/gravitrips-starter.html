@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gravitrips - Starter Template</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+        }
+        
+        #gameContainer {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            background: linear-gradient(to bottom, #0f3460, #16213e);
+            border: 3px solid #e94560;
+            margin: 20px auto;
+            overflow: hidden;
+        }
+        
+        #player {
+            position: absolute;
+            bottom: 20px;
+            left: 175px;
+            width: 50px;
+            height: 50px;
+            background-color: #00ff00;
+            border-radius: 5px;
+        }
+        
+        .fallingObject {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
+        
+        .star {
+            background-color: #ffd700;
+        }
+        
+        .bomb {
+            background-color: #ff0000;
+        }
+        
+        #scoreDisplay {
+            text-align: center;
+            font-size: 24px;
+            margin: 10px;
+        }
+        
+        #controls {
+            text-align: center;
+            margin: 20px;
+        }
+        
+        button {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background-color: #ff6b7a;
+        }
+        
+        #instructions {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #16213e;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreDisplay">Score: 0 | Lives: 3</div>
+    
+    <div id="gameContainer">
+        <div id="player"></div>
+    </div>
+    
+    <div id="controls">
+        <button id="startBtn">Start Game</button>
+        <button id="pauseBtn">Pause</button>
+    </div>
+    
+    <div id="instructions">
+        <h3>How to Play Gravitrips:</h3>
+        <ul>
+            <li>Use Arrow Keys (← →) or A/D to move</li>
+            <li>Catch the <span style="color: #ffd700;">★ stars</span> to gain points</li>
+            <li>Avoid the <span style="color: #ff0000;">● bombs</span> or lose lives</li>
+            <li>Game ends when you lose all lives</li>
+        </ul>
+        <p><strong>Your Mission:</strong> Complete this game using what you learned!</p>
+    </div>
+
+    <script>
+        // Game variables
+        let score = 0;
+        let lives = 3;
+        let isGameRunning = false;
+        let gameInterval;
+        let player = document.getElementById("player");
+        let gameContainer = document.getElementById("gameContainer");
+        let playerX = 175; // Player horizontal position
+        
+        // Update display
+        function updateDisplay() {
+            document.getElementById("scoreDisplay").textContent = 
+                `Score: ${score} | Lives: ${lives}`;
+        }
+        
+        // Move player
+        function movePlayer(direction) {
+            if (direction === "left" && playerX > 0) {
+                playerX -= 20;
+            } else if (direction === "right" && playerX < 350) {
+                playerX += 20;
+            }
+            player.style.left = playerX + "px";
+        }
+        
+        // Keyboard controls
+        document.addEventListener("keydown", function(event) {
+            if (!isGameRunning) return;
+            
+            if (event.key === "ArrowLeft" || event.key === "a") {
+                movePlayer("left");
+            } else if (event.key === "ArrowRight" || event.key === "d") {
+                movePlayer("right");
+            }
+        });
+        
+        // YOUR CHALLENGES:
+        // 1. Create a function to spawn falling objects (stars and bombs)
+        // 2. Make objects fall using setInterval or requestAnimationFrame
+        // 3. Detect collision between player and falling objects
+        // 4. Update score when catching stars
+        // 5. Decrease lives when hitting bombs
+        // 6. End game when lives reach 0
+        
+        // Start button
+        document.getElementById("startBtn").addEventListener("click", function() {
+            if (!isGameRunning) {
+                isGameRunning = true;
+                score = 0;
+                lives = 3;
+                updateDisplay();
+                console.log("Game started!");
+                // Add your game loop here
+            }
+        });
+        
+        // Pause button
+        document.getElementById("pauseBtn").addEventListener("click", function() {
+            isGameRunning = !isGameRunning;
+            console.log(isGameRunning ? "Resumed" : "Paused");
+        });
+        
+        // HINT for creating falling objects:
+        // function createFallingObject(type) {
+        //     let object = document.createElement("div");
+        //     object.classList.add("fallingObject", type);
+        //     object.style.left = Math.random() * 370 + "px";
+        //     object.style.top = "0px";
+        //     gameContainer.appendChild(object);
+        //     return object;
+        // }
+        
+        // Good luck! 🚀
+    </script>
+</body>
+</html>

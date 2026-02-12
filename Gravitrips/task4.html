@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 4 - If/Else Statements</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #scoreChecker {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        input {
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: none;
+            margin: 10px;
+            width: 150px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            font-size: 24px;
+            font-weight: bold;
+            min-height: 40px;
+        }
+        .champion {
+            background-color: #ffd700;
+            color: #000;
+        }
+        .good {
+            background-color: #4CAF50;
+        }
+        .tryagain {
+            background-color: #ff9800;
+        }
+        .danger {
+            background-color: #f44336;
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🤔 Task 4: Making Decisions with If/Else</h1>
+    <p>Programs need to make choices based on conditions. That's where if/else comes in!</p>
+
+    <div id="scoreChecker">
+        <h3>🎯 Score Checker</h3>
+        <p>Enter a score and see what message you get:</p>
+        <input type="number" id="scoreInput" placeholder="Enter score" value="75">
+        <br>
+        <button onclick="checkScore()">Check Score</button>
+        
+        <div id="result"></div>
+    </div>
+    
+    <div class="info">
+        <h3>📖 If/Else Decision Making:</h3>
+        <code>
+            if (condition) {<br>
+            &nbsp;&nbsp;// Do this if true<br>
+            } else if (anotherCondition) {<br>
+            &nbsp;&nbsp;// Do this if first is false, this is true<br>
+            } else {<br>
+            &nbsp;&nbsp;// Do this if all above are false<br>
+            }
+        </code>
+        
+        <h4>🔍 Comparison Operators:</h4>
+        <p><code>></code> greater than | <code><</code> less than</p>
+        <p><code>>=</code> greater or equal | <code><=</code> less or equal</p>
+        <p><code>===</code> equal to | <code>!==</code> not equal to</p>
+    </div>
+
+    <script>
+        // ===== DEMO FUNCTION =====
+        function checkScore() {
+            let scoreInput = document.getElementById("scoreInput");
+            let result = document.getElementById("result");
+            let score = parseInt(scoreInput.value);
+            
+            // Remove all classes first
+            result.className = "";
+            
+            // Make decisions based on score
+            if (score > 100) {
+                result.textContent = "🏆 You're a champion!";
+                result.classList.add("champion");
+                console.log("Score:", score, "- Champion! 🏆");
+            } else if (score > 50) {
+                result.textContent = "✨ Great job!";
+                result.classList.add("good");
+                console.log("Score:", score, "- Great job! ✨");
+            } else if (score > 0) {
+                result.textContent = "💪 Keep trying!";
+                result.classList.add("tryagain");
+                console.log("Score:", score, "- Keep trying! 💪");
+            } else {
+                result.textContent = "❌ Score must be positive!";
+                result.classList.add("danger");
+                console.log("Score:", score, "- Invalid! ❌");
+            }
+        }
+        
+        // ===== 🎯 YOUR TURN! =====
+        // 
+        // CHALLENGE: Create a checkLives(lives) function
+        // 
+        // STEP 1: Uncomment the function below
+        // STEP 2: In console, type: checkLives(3)
+        // STEP 3: Try different numbers: checkLives(1), checkLives(0)
+        // STEP 4: You should see different messages!
+        
+        // function checkLives(lives) {
+        //     if (lives === 0) {
+        //         return "💀 Game Over!";
+        //     } else if (lives <= 2) {
+        //         return "⚠️ Warning! Low lives!";
+        //     } else {
+        //         return "💚 You're doing great!";
+        //     }
+        // }
+        //
+        // ✅ TASK COMPLETE: When all 3 test cases return correct messages!
+        
+        // Test your function:
+        // console.log("\n=== Testing checkLives ===");
+        // console.log("Lives: 3 -", checkLives(3));
+        // console.log("Lives: 2 -", checkLives(2));
+        // console.log("Lives: 1 -", checkLives(1));
+        // console.log("Lives: 0 -", checkLives(0));
+        
+        // ===== MORE EXAMPLES =====
+        
+        // Check object type in game
+        function checkObjectType(type) {
+            if (type === "star") {
+                return "Good! +10 points";
+            } else if (type === "bomb") {
+                return "Bad! -1 life";
+            } else if (type === "coin") {
+                return "Great! +25 points";
+            } else {
+                return "Unknown object";
+            }
+        }
+        
+        // Test it
+        console.log("\n=== Object Types ===");
+        console.log("star:", checkObjectType("star"));
+        console.log("bomb:", checkObjectType("bomb"));
+        console.log("coin:", checkObjectType("coin"));
+        
+        // ===== BONUS: Multiple conditions =====
+        function checkGameStatus(score, lives) {
+            if (score > 100 && lives > 2) {
+                return "🌟 Perfect! High score and healthy!";
+            } else if (score > 100 || lives > 2) {
+                return "👍 Good! Either high score or many lives";
+            } else {
+                return "😰 Struggling! Low score and low lives";
+            }
+        }
+        
+        console.log("\n=== Game Status ===");
+        console.log(checkGameStatus(150, 3));
+        console.log(checkGameStatus(150, 1));
+        console.log(checkGameStatus(30, 1));
+        
+    </script>
+</body>
+</html>

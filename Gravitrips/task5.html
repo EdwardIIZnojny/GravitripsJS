@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 5 - Arrays</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #arrayDisplay {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        .array-item {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0b7dda;
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        #stats {
+            font-size: 20px;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: rgba(255, 215, 0, 0.2);
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📋 Task 5: Arrays - Lists of Things</h1>
+    <p>Arrays store multiple values in a single variable. Perfect for game objects!</p>
+
+    <div id="arrayDisplay"></div>
+    
+    <div id="stats"></div>
+    
+    <button onclick="showArray()">📄 Show Array</button>
+    <button onclick="addItem()">➕ Add Item</button>
+    <button onclick="removeFirst()">⬅️ Remove First</button>
+    <button onclick="removeLast()">➡️ Remove Last</button>
+    <button onclick="findItem()">🔍 Find "coin"</button>
+    
+    <div class="info">
+        <h3>📖 Array Methods:</h3>
+        <p><code>array.push(item)</code> - Add to end</p>
+        <p><code>array.pop()</code> - Remove from end</p>
+        <p><code>array.unshift(item)</code> - Add to beginning</p>
+        <p><code>array.shift()</code> - Remove from beginning</p>
+        <p><code>array.length</code> - How many items</p>
+        <p><code>array[0]</code> - Access first item (arrays start at 0!)</p>
+        <p><code>array.indexOf(item)</code> - Find item position</p>
+    </div>
+
+    <script>
+        // ===== OUR GAME OBJECTS ARRAY =====
+        let fallingObjects = ["star", "coin", "bomb"];
+        
+        function displayArray() {
+            let display = document.getElementById("arrayDisplay");
+            let stats = document.getElementById("stats");
+            
+            // Show each item
+            display.innerHTML = "<h3>🎮 Falling Objects:</h3>";
+            fallingObjects.forEach((item, index) => {
+                display.innerHTML += `<span class="array-item">[${index}] ${item}</span>`;
+            });
+            
+            // Show stats
+            stats.innerHTML = `
+                📊 Array Length: <strong>${fallingObjects.length}</strong><br>
+                🥇 First Item: <strong>${fallingObjects[0]}</strong><br>
+                🥉 Last Item: <strong>${fallingObjects[fallingObjects.length - 1]}</strong>
+            `;
+            
+            // Console output
+            console.log("Current array:", fallingObjects);
+            console.log("Length:", fallingObjects.length);
+        }
+        
+        function showArray() {
+            displayArray();
+        }
+        
+        function addItem() {
+            let newItems = ["gem", "diamond", "heart", "shield"];
+            let randomItem = newItems[Math.floor(Math.random() * newItems.length)];
+            
+            fallingObjects.push(randomItem);
+            console.log("➕ Added:", randomItem);
+            displayArray();
+        }
+        
+        function removeFirst() {
+            if (fallingObjects.length > 0) {
+                let removed = fallingObjects.shift();
+                console.log("⬅️ Removed first:", removed);
+                displayArray();
+            } else {
+                alert("Array is empty!");
+            }
+        }
+        
+        function removeLast() {
+            if (fallingObjects.length > 0) {
+                let removed = fallingObjects.pop();
+                console.log("➡️ Removed last:", removed);
+                displayArray();
+            } else {
+                alert("Array is empty!");
+            }
+        }
+        
+        function findItem() {
+            let index = fallingObjects.indexOf("coin");
+            if (index !== -1) {
+                alert("Found 'coin' at index " + index);
+                console.log("🔍 Found 'coin' at index:", index);
+            } else {
+                alert("'coin' not found in array!");
+                console.log("🔍 'coin' not found");
+            }
+        }
+        
+        // Show initial array
+        displayArray();
+        
+        // ===== 🎯 YOUR TURN! =====
+        // 
+        // CHALLENGE: Create and manipulate your own array
+        // 
+        // STEP 1: Uncomment all the lines below
+        // STEP 2: Change the power-up names if you want
+        // STEP 3: Save and refresh - check the console!
+        // STEP 4: You should see your array operations
+        
+        // let powerUps = ["speed", "shield", "magnet"];
+        // console.log("\n=== MY POWER-UPS ===");
+        // console.log("All power-ups:", powerUps);
+        // console.log("First power-up:", powerUps[0]);
+        // powerUps.push("invincibility");
+        // console.log("After adding:", powerUps);
+        // console.log("Total power-ups:", powerUps.length);
+        //
+        // ✅ TASK COMPLETE: When you see your array in the console!
+        
+        // ===== BONUS: Working with Numbers =====
+        let scores = [10, 25, 50, 100, 200];
+        console.log("\n=== Score Array ===");
+        console.log("Scores:", scores);
+        console.log("Highest score:", Math.max(...scores));
+        console.log("Lowest score:", Math.min(...scores));
+        
+        // Check if array contains a value
+        console.log("Has 50?", scores.includes(50));
+        console.log("Has 75?", scores.includes(75));
+        
+    </script>
+</body>
+</html>

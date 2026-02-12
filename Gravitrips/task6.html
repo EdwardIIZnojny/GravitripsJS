@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 6 - Loops</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #loopDisplay {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        .loop-item {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid #4CAF50;
+            border-radius: 3px;
+            animation: slideIn 0.3s ease-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        button {
+            background-color: #2196F3;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0b7dda;
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 14px;
+            display: block;
+            margin: 5px 0;
+        }
+        #totalScore {
+            font-size: 32px;
+            color: #ffd700;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Task 6: Loops - Repeat Actions</h1>
+    <p>Loops let you do something over and over without copy-pasting code!</p>
+
+    <div id="loopDisplay"></div>
+    <div id="totalScore"></div>
+    
+    <button onclick="demonstrateForLoop()">🔁 For Loop</button>
+    <button onclick="demonstrateForEach()">➰ forEach Loop</button>
+    <button onclick="demonstrateWhile()">⏩ While Loop</button>
+    <button onclick="calculateTotalScore()">📊 Sum Scores</button>
+    
+    <div class="info">
+        <h3>📖 Types of Loops:</h3>
+        
+        <h4>1️⃣ Traditional For Loop (most control)</h4>
+        <code>
+for (let i = 0; i < array.length; i++) {<br>
+&nbsp;&nbsp;console.log(array[i]);<br>
+}
+        </code>
+        
+        <h4>2️⃣ forEach (easy, for arrays)</h4>
+        <code>
+array.forEach(item => {<br>
+&nbsp;&nbsp;console.log(item);<br>
+});
+        </code>
+        
+        <h4>3️⃣ While Loop (when you don't know how many times)</h4>
+        <code>
+while (condition) {<br>
+&nbsp;&nbsp;// Do something<br>
+}
+        </code>
+    </div>
+
+    <script>
+        let fallingObjects = ["⭐ star", "🪙 coin", "💣 bomb", "💎 gem"];
+        let scores = [10, 25, 50, 100, 200];
+        
+        // ===== METHOD 1: Traditional FOR loop =====
+        function demonstrateForLoop() {
+            let display = document.getElementById("loopDisplay");
+            display.innerHTML = "<h3>🔁 For Loop (with index):</h3>";
+            
+            console.log("\n=== FOR LOOP ===");
+            for (let i = 0; i < fallingObjects.length; i++) {
+                let message = `[${i}] Falling: ${fallingObjects[i]}`;
+                display.innerHTML += `<div class="loop-item">${message}</div>`;
+                console.log(message);
+            }
+        }
+        
+        // ===== METHOD 2: forEach (easier!) =====
+        function demonstrateForEach() {
+            let display = document.getElementById("loopDisplay");
+            display.innerHTML = "<h3>➰ forEach Loop (automatic):</h3>";
+            
+            console.log("\n=== FOREACH LOOP ===");
+            fallingObjects.forEach((item, index) => {
+                let message = `Item #${index + 1}: ${item}`;
+                display.innerHTML += `<div class="loop-item">${message}</div>`;
+                console.log(message);
+            });
+        }
+        
+        // ===== METHOD 3: While loop =====
+        function demonstrateWhile() {
+            let display = document.getElementById("loopDisplay");
+            display.innerHTML = "<h3>⏩ While Loop (condition-based):</h3>";
+            
+            console.log("\n=== WHILE LOOP ===");
+            let i = 0;
+            while (i < fallingObjects.length) {
+                let message = `Position ${i}: ${fallingObjects[i]}`;
+                display.innerHTML += `<div class="loop-item">${message}</div>`;
+                console.log(message);
+                i++;  // Don't forget to increment!
+            }
+        }
+        
+        // ===== PRACTICAL EXAMPLE: Sum all scores =====
+        function calculateTotalScore() {
+            let total = 0;
+            let display = document.getElementById("loopDisplay");
+            let totalDiv = document.getElementById("totalScore");
+            
+            display.innerHTML = "<h3>📊 Calculating Total Score:</h3>";
+            console.log("\n=== SUMMING SCORES ===");
+            
+            scores.forEach(score => {
+                total += score;  // Add to total
+                display.innerHTML += `<div class="loop-item">Adding ${score}... Total: ${total}</div>`;
+                console.log(`Adding ${score}... Total so far: ${total}`);
+            });
+            
+            totalDiv.innerHTML = `🏆 Total Score: ${total}`;
+            console.log(`✅ Final Total: ${total}`);
+        }
+        
+        // ===== 🎯 YOUR TURN! =====
+        // 
+        // CHALLENGE: Loop through an array and calculate sum
+        // 
+        // STEP 1: Uncomment all lines below
+        // STEP 2: Run the code (save and refresh)
+        // STEP 3: Check console - you should see each number and the sum
+        // STEP 4: Try changing the numbers!
+        
+        // let myNumbers = [5, 10, 15, 20, 25];
+        // console.log("\n=== MY NUMBERS ===");
+        // 
+        // let sum = 0;
+        // myNumbers.forEach(num => {
+        //     console.log("Number:", num);
+        //     sum += num;
+        // });
+        // console.log("Sum:", sum);
+        // console.log("Average:", sum / myNumbers.length);
+        //
+        // ✅ TASK COMPLETE: When you see the sum and average in console!
+        
+        // ===== MORE LOOP EXAMPLES =====
+        
+        // Loop with conditions
+        console.log("\n=== Filtering Good Objects ===");
+        fallingObjects.forEach(obj => {
+            if (obj.includes("star") || obj.includes("coin")) {
+                console.log("✅ Good:", obj);
+            } else {
+                console.log("❌ Bad:", obj);
+            }
+        });
+        
+        // Loop to create new array (map)
+        let doubledScores = scores.map(score => score * 2);
+        console.log("\n=== Doubled Scores ===");
+        console.log("Original:", scores);
+        console.log("Doubled:", doubledScores);
+        
+        // Loop to filter (only high scores)
+        let highScores = scores.filter(score => score >= 50);
+        console.log("\n=== High Scores Only ===");
+        console.log("High scores:", highScores);
+        
+        // BONUS: Nested loops (loop inside loop)
+        console.log("\n=== Nested Loop Example ===");
+        for (let i = 1; i <= 3; i++) {
+            for (let j = 1; j <= 3; j++) {
+                console.log(`Row ${i}, Column ${j}`);
+            }
+        }
+        
+    </script>
+</body>
+</html>

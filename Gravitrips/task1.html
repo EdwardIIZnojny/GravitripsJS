@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 1 - Hello JavaScript!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #output {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            min-height: 100px;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+        .code-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>✨ Task 1: Your First JavaScript Code</h1>
+    <p>JavaScript can show messages in TWO places:</p>
+    <ol>
+        <li><strong>In the browser console</strong> (for developers)</li>
+        <li><strong>On the webpage</strong> (for users)</li>
+    </ol>
+    
+    <h3>📺 Output on the page:</h3>
+    <div id="output"></div>
+    
+    <h3>🔍 How to open console:</h3>
+    <ul>
+        <li>Right-click anywhere → "Inspect" → Click "Console" tab</li>
+        <li>Or press: <code>Cmd + Option + J</code> (Mac) / <code>F12</code> (Windows)</li>
+    </ul>
+
+    <script>
+        // This is a comment - JavaScript ignores this line
+        // Comments help explain what your code does
+        
+        // ===== METHOD 1: Print to Console (for debugging) =====
+        console.log("Hello, Gravitrips!");
+        console.log("Welcome to JavaScript! 🚀");
+        console.log("Check the console to see these messages!");
+        
+        // Different console methods:
+        console.warn("This is a warning message (orange)");
+        console.error("This is an error message (red)");
+        console.info("This is an info message (blue)");
+        
+        // ===== METHOD 2: Show on the webpage =====
+        // Get the output div
+        let outputDiv = document.getElementById("output");
+        
+        // Add text to it
+        outputDiv.innerHTML = "🎮 Hello from Gravitrips!<br>";
+        outputDiv.innerHTML += "JavaScript is running! ✅<br>";
+        outputDiv.innerHTML += "You just wrote your first code! 🎉<br>";
+        outputDiv.innerHTML += "<br>Now check the console for more messages!";
+        
+        // ===== 🎯 YOUR TURN! =====
+        // CHALLENGE: Add your own message to the output
+        // 
+        // STEP 1: Uncomment the line below (remove the //)
+        // STEP 2: Change the message to something you like
+        // STEP 3: Save this file and refresh your browser
+        //
+        // outputDiv.innerHTML += "<br><br>🌟 My first JavaScript message!";
+        
+    </script>
+    
+    <div class="code-box">
+        💡 <strong>What you learned:</strong><br>
+        • console.log() - prints to console<br>
+        • document.getElementById() - finds HTML elements<br>
+        • innerHTML - changes what's shown on the page<br>
+        • // - makes comments in your code<br>
+        <br>
+        <strong>✅ Task Complete When:</strong> You see YOUR custom message on the page!
+    </div>
+</body>
+</html>

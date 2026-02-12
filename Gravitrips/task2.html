@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 2 - Variables</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        #playerCard {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 20px;
+        }
+        .variable-demo {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .type {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>📦 Task 2: Variables - Containers for Data</h1>
+    <p>Variables store information. Think of them as labeled boxes!</p>
+
+    <div id="playerCard">
+        <h3>🎮 Player Profile:</h3>
+        <div id="profile">Creating your player...</div>
+    </div>
+    
+    <button onclick="demonstrateVariables()">🔄 Run Demo</button>
+    
+    <div class="variable-demo">
+        <h3>📚 Variable Types in JavaScript:</h3>
+        <p><span class="type">String</span> - Text: "Hello", 'Alex', `Game Over`</p>
+        <p><span class="type">Number</span> - Numbers: 42, 3.14, -10</p>
+        <p><span class="type">Boolean</span> - True or False: true, false</p>
+        <p><span class="type">undefined</span> - Variable with no value yet</p>
+    </div>
+
+    <script>
+        // ===== DEMONSTRATION =====
+        function demonstrateVariables() {
+            let profileDiv = document.getElementById("profile");
+            
+            // Variables are like containers with labels
+            let playerName = "Alex";           // String (text)
+            let score = 0;                     // Number
+            let lives = 3;                     // Number
+            let isGameActive = true;           // Boolean
+            let highScore = 1500;              // Number
+            
+            // Display them
+            profileDiv.innerHTML = `
+                👤 Name: ${playerName}<br>
+                ⭐ Score: ${score}<br>
+                ❤️ Lives: ${lives}<br>
+                🎮 Game Active: ${isGameActive}<br>
+                🏆 High Score: ${highScore}
+            `;
+            
+            // Also log to console
+            console.log("=== Player Variables ===");
+            console.log("Name:", playerName, "- Type:", typeof playerName);
+            console.log("Score:", score, "- Type:", typeof score);
+            console.log("Lives:", lives, "- Type:", typeof lives);
+            console.log("Active:", isGameActive, "- Type:", typeof isGameActive);
+        }
+        
+        // ===== 🎯 YOUR TURN! =====
+        // Now YOU create your own player!
+        // 
+        // STEP 1: Uncomment the lines below (remove //)
+        // STEP 2: Change "Your Name" to YOUR actual name
+        // STEP 3: Change the numbers if you want
+        // STEP 4: Save and refresh - check the console!
+        
+        // let myPlayerName = "Your Name";
+        // let myScore = 100;
+        // let myLives = 5;
+        // let isPlaying = true;
+        
+        // console.log("\n===== MY PLAYER =====");
+        // console.log("👤 My Player:", myPlayerName);
+        // console.log("⭐ My Score:", myScore);
+        // console.log("❤️ My Lives:", myLives);
+        // console.log("🎮 Am I Playing?", isPlaying);
+        //
+        // ✅ TASK COMPLETE WHEN: You see YOUR player info in the console!
+        
+        // ===== LET vs CONST =====
+        // let - can be changed later
+        let healthPoints = 100;
+        healthPoints = 75;  // ✅ This works
+        
+        // const - cannot be changed (constant)
+        const maxLives = 3;
+        // maxLives = 5;  // ❌ This would cause an error!
+        
+        console.log("\n=== let vs const ===");
+        console.log("Health (let):", healthPoints, "- Can change ✅");
+        console.log("Max Lives (const):", maxLives, "- Cannot change 🔒");
+        
+        // BONUS CHALLENGE:
+        // Try to create variables for:
+        // - Game title (const, since it won't change)
+        // - Current level (let, since it will increase)
+        // - Player position X and Y (let, since player moves)
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 10 - Build Gravitrips!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: white;
+        }
+        
+        #gameInfo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        #scoreDisplay {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        
+        #livesDisplay {
+            font-size: 24px;
+            color: #ff6b7a;
+        }
+        
+        #gameContainer {
+            position: relative;
+            width: 400px;
+            height: 600px;
+            background: linear-gradient(to bottom, #0f3460, #16213e);
+            border: 3px solid #e94560;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        
+        #player {
+            position: absolute;
+            bottom: 20px;
+            left: 175px;
+            width: 50px;
+            height: 50px;
+            background-color: #00ff00;
+            border-radius: 5px;
+            transition: left 0.1s;
+        }
+        
+        .fallingObject {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .star {
+            background-color: #ffd700;
+        }
+        
+        .star::before {
+            content: "★";
+        }
+        
+        .bomb {
+            background-color: #ff0000;
+        }
+        
+        .bomb::before {
+            content: "💣";
+        }
+        
+        .coin {
+            background-color: #ffaa00;
+        }
+        
+        .coin::before {
+            content: "●";
+            color: #fff;
+        }
+        
+        #controls {
+            text-align: center;
+            margin: 20px;
+        }
+        
+        button {
+            background-color: #e94560;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 5px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        button:hover {
+            background-color: #ff6b7a;
+        }
+        
+        button:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        
+        #instructions {
+            max-width: 400px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #16213e;
+            border-radius: 5px;
+            border: 2px solid #e94560;
+        }
+        
+        #gameOver {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            border: 3px solid #e94560;
+            text-align: center;
+            z-index: 100;
+        }
+        
+        #gameOver h2 {
+            color: #ff6b7a;
+            margin-top: 0;
+        }
+        
+        #finalScore {
+            font-size: 36px;
+            color: #ffd700;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameInfo">
+        <div id="scoreDisplay">Score: 0</div>
+        <div id="livesDisplay">Lives: ❤️❤️❤️</div>
+    </div>
+    
+    <div id="gameContainer">
+        <div id="player"></div>
+        
+        <div id="gameOver">
+            <h2>GAME OVER</h2>
+            <div id="finalScore">Score: 0</div>
+            <button id="restartBtn">Play Again</button>
+        </div>
+    </div>
+    
+    <div id="controls">
+        <button id="startBtn">Start Game</button>
+        <button id="pauseBtn" disabled>Pause</button>
+    </div>
+    
+    <div id="instructions">
+        <h3>🎮 How to Play Gravitrips:</h3>
+        <ul>
+            <li><strong>Move:</strong> Arrow Keys (← →) or A/D keys</li>
+            <li><strong>★ Stars:</strong> +10 points</li>
+            <li><strong>● Coins:</strong> +25 points</li>
+            <li><strong>💣 Bombs:</strong> -1 life</li>
+        </ul>
+        <h3>📋 Your Mission:</h3>
+        <p>Complete the following tasks to make the game work:</p>
+        <ol>
+            <li>✅ Player movement (already done!)</li>
+            <li>Create falling objects that spawn randomly</li>
+            <li>Make objects fall down the screen</li>
+            <li>Detect collision between player and objects</li>
+            <li>Update score when catching good objects</li>
+            <li>Lose lives when hitting bombs</li>
+            <li>End game when lives = 0</li>
+        </ol>
+    </div>
+
+    <script>
+        // ========== GAME VARIABLES ==========
+        let score = 0;
+        let lives = 3;
+        let isGameRunning = false;
+        let isPaused = false;
+        let playerX = 175;
+        let gameObjects = []; // Array to store all falling objects
+        let gameSpeed = 3; // How fast objects fall
+        let spawnInterval; // For spawning new objects
+        let gameLoop; // For the main game animation
+        
+        // ========== GET DOM ELEMENTS ==========
+        let player = document.getElementById("player");
+        let gameContainer = document.getElementById("gameContainer");
+        let scoreDisplay = document.getElementById("scoreDisplay");
+        let livesDisplay = document.getElementById("livesDisplay");
+        let startBtn = document.getElementById("startBtn");
+        let pauseBtn = document.getElementById("pauseBtn");
+        let gameOverDiv = document.getElementById("gameOver");
+        let finalScoreDiv = document.getElementById("finalScore");
+        let restartBtn = document.getElementById("restartBtn");
+        
+        // ========== HELPER FUNCTIONS ==========
+        
+        function updateDisplay() {
+            scoreDisplay.textContent = `Score: ${score}`;
+            let hearts = "❤️".repeat(lives);
+            livesDisplay.textContent = `Lives: ${hearts}`;
+        }
+        
+        function movePlayer(direction) {
+            if (!isGameRunning || isPaused) return;
+            
+            if (direction === "left" && playerX > 0) {
+                playerX -= 25;
+            } else if (direction === "right" && playerX < 350) {
+                playerX += 25;
+            }
+            player.style.left = playerX + "px";
+        }
+        
+        // ========== YOUR TASKS START HERE ==========
+        
+        // TASK 1: Create falling objects
+        function createFallingObject() {
+            // Create a div element
+            let object = document.createElement("div");
+            object.classList.add("fallingObject");
+            
+            // Randomly choose type: star (50%), coin (30%), or bomb (20%)
+            let random = Math.random();
+            let type;
+            if (random < 0.5) {
+                type = "star";
+                object.classList.add("star");
+            } else if (random < 0.8) {
+                type = "coin";
+                object.classList.add("coin");
+            } else {
+                type = "bomb";
+                object.classList.add("bomb");
+            }
+            
+            // YOUR CODE: Set random horizontal position
+            // Hint: object.style.left = Math.random() * 370 + "px";
+            
+            // YOUR CODE: Set starting position at top
+            // Hint: object.style.top = "0px";
+            
+            // YOUR CODE: Add to game container
+            // Hint: gameContainer.appendChild(object);
+            
+            // YOUR CODE: Add to gameObjects array with info
+            // gameObjects.push({
+            //     element: object,
+            //     type: type,
+            //     x: parseInt(object.style.left),
+            //     y: 0
+            // });
+        }
+        
+        // TASK 2: Make objects fall
+        function updateGame() {
+            if (!isGameRunning || isPaused) return;
+            
+            // YOUR CODE: Loop through all game objects
+            // for (let i = gameObjects.length - 1; i >= 0; i--) {
+            //     let obj = gameObjects[i];
+            //     
+            //     // Move object down
+            //     obj.y += gameSpeed;
+            //     obj.element.style.top = obj.y + "px";
+            //     
+            //     // Check collision with player
+            //     checkCollision(obj, i);
+            //     
+            //     // Remove if off screen
+            //     if (obj.y > 600) {
+            //         obj.element.remove();
+            //         gameObjects.splice(i, 1);
+            //     }
+            // }
+        }
+        
+        // TASK 3: Detect collision
+        function checkCollision(obj, index) {
+            // YOUR CODE: Check if object hits player
+            // Player is at: playerX to playerX + 50 (width)
+            // Player is at: y = 550 (bottom - 20 - 30)
+            
+            // Hint for collision detection:
+            // let playerLeft = playerX;
+            // let playerRight = playerX + 50;
+            // let playerTop = 550;
+            // let playerBottom = 580;
+            // 
+            // let objLeft = obj.x;
+            // let objRight = obj.x + 30;
+            // let objTop = obj.y;
+            // let objBottom = obj.y + 30;
+            // 
+            // Check if rectangles overlap
+            // if (objRight > playerLeft && objLeft < playerRight &&
+            //     objBottom > playerTop && objTop < playerBottom) {
+            //     handleCollision(obj, index);
+            // }
+        }
+        
+        // TASK 4: Handle what happens when objects are caught
+        function handleCollision(obj, index) {
+            // YOUR CODE: Update score or lives based on type
+            // if (obj.type === "star") {
+            //     score += 10;
+            // } else if (obj.type === "coin") {
+            //     score += 25;
+            // } else if (obj.type === "bomb") {
+            //     lives -= 1;
+            //     if (lives <= 0) {
+            //         endGame();
+            //     }
+            // }
+            // 
+            // // Remove the object
+            // obj.element.remove();
+            // gameObjects.splice(index, 1);
+            // updateDisplay();
+        }
+        
+        // ========== GAME CONTROL FUNCTIONS ==========
+        
+        function startGame() {
+            score = 0;
+            lives = 3;
+            isGameRunning = true;
+            isPaused = false;
+            playerX = 175;
+            player.style.left = playerX + "px";
+            gameObjects = [];
+            gameOverDiv.style.display = "none";
+            
+            // Clear any existing objects
+            document.querySelectorAll(".fallingObject").forEach(obj => obj.remove());
+            
+            updateDisplay();
+            
+            // Spawn objects every 1.5 seconds
+            spawnInterval = setInterval(createFallingObject, 1500);
+            
+            // Run game loop 60 times per second
+            gameLoop = setInterval(updateGame, 1000 / 60);
+            
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+        }
+        
+        function pauseGame() {
+            isPaused = !isPaused;
+            pauseBtn.textContent = isPaused ? "Resume" : "Pause";
+        }
+        
+        function endGame() {
+            isGameRunning = false;
+            clearInterval(spawnInterval);
+            clearInterval(gameLoop);
+            
+            finalScoreDiv.textContent = `Score: ${score}`;
+            gameOverDiv.style.display = "block";
+            
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+        }
+        
+        // ========== EVENT LISTENERS ==========
+        
+        // Keyboard controls
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowLeft" || event.key === "a" || event.key === "A") {
+                movePlayer("left");
+            } else if (event.key === "ArrowRight" || event.key === "d" || event.key === "D") {
+                movePlayer("right");
+            }
+        });
+        
+        // Button controls
+        startBtn.addEventListener("click", startGame);
+        pauseBtn.addEventListener("click", pauseGame);
+        restartBtn.addEventListener("click", startGame);
+        
+        // ========== BONUS CHALLENGES ==========
+        // 1. Increase game speed over time
+        // 2. Add power-ups (extra life, shield, slow-motion)
+        // 3. Add sound effects
+        // 4. Save high score to localStorage
+        // 5. Add different difficulty levels
+        // 6. Add particle effects when catching objects
+        // 7. Mobile touch controls
+        
+        console.log("🎮 Gravitrips loaded! Complete the tasks to make it work!");
+    </script>
+</body>
+</html>

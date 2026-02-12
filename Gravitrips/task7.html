@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 7 - Objects</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .card {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #4CAF50;
+        }
+        .player-card {
+            border-left-color: #2196F3;
+        }
+        .object-card {
+            border-left-color: #ff9800;
+        }
+        .property {
+            margin: 10px 0;
+            padding: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+        .label {
+            color: #ffd700;
+            font-weight: bold;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        #objectsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .mini-card {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎮 Task 7: Objects - Group Related Data</h1>
+    <p>Objects store multiple properties together. Perfect for complex game entities!</p>
+
+    <div class="card player-card" id="playerCard">
+        <h3>👤 Player Object</h3>
+        <div id="playerInfo"></div>
+    </div>
+    
+    <button onclick="showPlayer()">👤 Show Player</button>
+    <button onclick="movePlayer()">➡️ Move Player</button>
+    <button onclick="addScore()">⭐ Add Score</button>
+    <button onclick="showPlayerMethod()">📢 Player Greeting</button>
+    
+    <div id="objectsContainer"></div>
+    
+    <button onclick="createFallingObjects()">💫 Create Falling Objects</button>
+    
+    <div class="info">
+        <h3>📖 Object Syntax:</h3>
+        <code>
+let player = {<br>
+&nbsp;&nbsp;name: "Alex",&nbsp;&nbsp;&nbsp;&nbsp;// Property<br>
+&nbsp;&nbsp;score: 100,<br>
+&nbsp;&nbsp;position: {&nbsp;&nbsp;&nbsp;&nbsp;// Nested object<br>
+&nbsp;&nbsp;&nbsp;&nbsp;x: 50,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;y: 100<br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;greet: function() {&nbsp;&nbsp;// Method<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return "Hi!";<br>
+&nbsp;&nbsp;}<br>
+};
+        </code>
+        
+        <h4>🔑 Accessing Properties:</h4>
+        <p><code>player.name</code> - Dot notation</p>
+        <p><code>player["name"]</code> - Bracket notation</p>
+        <p><code>player.position.x</code> - Nested property</p>
+        <p><code>player.greet()</code> - Call a method</p>
+    </div>
+
+    <script>
+        // ===== PLAYER OBJECT with METHODS =====
+        let player = {
+            name: "Alex",
+            score: 0,
+            lives: 3,
+            position: {
+                x: 100,
+                y: 200
+            },
+            powerUps: ["shield", "speed"],
+            
+            // Method: function inside an object
+            greet: function() {
+                return `Hello! I'm ${this.name}`;
+            },
+            
+            // Method: add points
+            addPoints: function(points) {
+                this.score += points;
+                return this.score;
+            },
+            
+            // Method: move player
+            move: function(direction) {
+                if (direction === "right") {
+                    this.position.x += 10;
+                } else if (direction === "left") {
+                    this.position.x -= 10;
+                }
+            }
+        };
+        
+        function displayPlayer() {
+            let info = document.getElementById("playerInfo");
+            info.innerHTML = `
+                <div class="property"><span class="label">Name:</span> ${player.name}</div>
+                <div class="property"><span class="label">Score:</span> ${player.score}</div>
+                <div class="property"><span class="label">Lives:</span> ${"❤️".repeat(player.lives)}</div>
+                <div class="property"><span class="label">Position:</span> (${player.position.x}, ${player.position.y})</div>
+                <div class="property"><span class="label">Power-ups:</span> ${player.powerUps.join(", ")}</div>
+            `;
+        }
+        
+        function showPlayer() {
+            displayPlayer();
+            console.log("\n=== Player Object ===");
+            console.log("Full object:", player);
+            console.log("Name:", player.name);
+            console.log("Position:", player.position);
+        }
+        
+        function movePlayer() {
+            player.move("right");
+            displayPlayer();
+            console.log("Moved to:", player.position);
+        }
+        
+        function addScore() {
+            let newScore = player.addPoints(10);
+            displayPlayer();
+            console.log("Score increased to:", newScore);
+        }
+        
+        function showPlayerMethod() {
+            let greeting = player.greet();
+            alert(greeting);
+            console.log(greeting);
+        }
+        
+        // Show initial player
+        displayPlayer();
+        
+        // ===== ARRAY OF OBJECTS =====
+        function createFallingObjects() {
+            let gameObjects = [
+                {
+                    type: "star",
+                    points: 10,
+                    position: { x: 100, y: 0 },
+                    speed: 3,
+                    emoji: "⭐"
+                },
+                {
+                    type: "bomb",
+                    damage: 1,
+                    position: { x: 200, y: 50 },
+                    speed: 4,
+                    emoji: "💣"
+                },
+                {
+                    type: "coin",
+                    points: 25,
+                    position: { x: 300, y: 100 },
+                    speed: 2,
+                    emoji: "🪙"
+                }
+            ];
+            
+            let container = document.getElementById("objectsContainer");
+            container.innerHTML = "<h3 style='grid-column: 1 / -1;'>💫 Falling Objects Array:</h3>";
+            
+            console.log("\n=== Falling Objects ===");
+            gameObjects.forEach((obj, index) => {
+                // Add to page
+                container.innerHTML += `
+                    <div class="mini-card">
+                        <div style="font-size: 40px;">${obj.emoji}</div>
+                        <div><strong>${obj.type}</strong></div>
+                        <div>Pos: (${obj.position.x}, ${obj.position.y})</div>
+                        <div>Speed: ${obj.speed}</div>
+                        ${obj.points ? `<div>Points: +${obj.points}</div>` : ''}
+                        ${obj.damage ? `<div>Damage: -${obj.damage}</div>` : ''}
+                    </div>
+                `;
+                
+                // Log to console
+                console.log(`${obj.emoji} ${obj.type}:`, obj);
+            });
+        }
+        
+        // ===== 🎯 YOUR TURN! =====
+        // 
+        // CHALLENGE: Create and modify your own player object
+        // 
+        // STEP 1: Uncomment the code below
+        // STEP 2: Change "Your Name" to your actual name
+        // STEP 3: Save and refresh - check the console
+        // STEP 4: You should see your player created and modified
+        
+        // let myPlayer = {
+        //     name: "Your Name",
+        //     score: 0,
+        //     lives: 3,
+        //     position: { x: 150, y: 250 }
+        // };
+        // 
+        // console.log("\n=== MY PLAYER ===");
+        // console.log("Created:", myPlayer);
+        // console.log("Name:", myPlayer.name);
+        // console.log("Position:", myPlayer.position.x, myPlayer.position.y);
+        // 
+        // myPlayer.score = 50;
+        // myPlayer.level = 1;
+        // console.log("Updated:", myPlayer);
+        //
+        // ✅ TASK COMPLETE: When you see your player object in console!
+        
+        // ===== BONUS: Object with method =====
+        let enemy = {
+            name: "Goblin",
+            health: 100,
+            
+            takeDamage: function(damage) {
+                this.health -= damage;
+                console.log(`${this.name} took ${damage} damage. Health: ${this.health}`);
+                return this.health;
+            }
+        };
+        
+        console.log("\n=== Enemy Object ===");
+        console.log("Enemy:", enemy.name, "Health:", enemy.health);
+        enemy.takeDamage(30);
+        enemy.takeDamage(20);
+        
+    </script>
+</body>
+</html>

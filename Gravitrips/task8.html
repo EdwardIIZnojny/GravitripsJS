@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 8 - DOM Manipulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        h1 {
+            text-align: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        #gameContainer {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        #scoreDisplay {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #000;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        #message {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            background-color: rgba(33, 150, 243, 0.3);
+            border-left: 4px solid #2196F3;
+            font-size: 20px;
+            min-height: 30px;
+            transition: all 0.3s;
+        }
+        #playerAvatar {
+            width: 80px;
+            height: 80px;
+            background-color: #00ff00;
+            margin: 20px auto;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        #playerAvatar:hover {
+            transform: rotate(10deg) scale(1.1);
+        }
+        .info {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        code {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .success {
+            background-color: rgba(76, 175, 80, 0.3);
+            border-left-color: #4CAF50;
+        }
+        .warning {
+            background-color: rgba(255, 152, 0, 0.3);
+            border-left-color: #ff9800;
+        }
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎨 Task 8: DOM Manipulation - Control the Webpage</h1>
+    <p style="text-align: center;">The DOM (Document Object Model) lets JavaScript change HTML and CSS!</p>
+
+    <div id="gameContainer">
+        <div id="message">Welcome to DOM Manipulation! 🎮</div>
+        
+        <div id="playerAvatar">🎮</div>
+        
+        <div id="scoreDisplay">Score: 0</div>
+        
+        <div class="controls">
+            <button id="changeMessageBtn">📝 Change Message</button>
+            <button id="increaseScoreBtn">⬆️ +10 Score</button>
+            <button id="decreaseScoreBtn">⬇️ -10 Score</button>
+            <button id="resetBtn">🔄 Reset</button>
+            <button id="changeColorBtn">🎨 Change Color</button>
+            <button id="changeAvatarBtn">😀 Change Avatar</button>
+        </div>
+    </div>
+    
+    <div class="info">
+        <h3>📖 Key DOM Methods:</h3>
+        <p><code>document.getElementById("id")</code> - Find element by ID</p>
+        <p><code>document.querySelector(".class")</code> - Find first matching element</p>
+        <p><code>element.textContent</code> - Change text</p>
+        <p><code>element.innerHTML</code> - Change HTML</p>
+        <p><code>element.style.property</code> - Change CSS</p>
+        <p><code>element.classList.add("class")</code> - Add CSS class</p>
+        <p><code>element.addEventListener("click", function)</code> - Listen for events</p>
+    </div>
+
+    <script>
+        // ===== GET ELEMENTS =====
+        let messageDiv = document.getElementById("message");
+        let scoreDisplay = document.getElementById("scoreDisplay");
+        let playerAvatar = document.getElementById("playerAvatar");
+        let changeMessageBtn = document.getElementById("changeMessageBtn");
+        let increaseScoreBtn = document.getElementById("increaseScoreBtn");
+        let decreaseScoreBtn = document.getElementById("decreaseScoreBtn");
+        let resetBtn = document.getElementById("resetBtn");
+        let changeColorBtn = document.getElementById("changeColorBtn");
+        let changeAvatarBtn = document.getElementById("changeAvatarBtn");
+        
+        // ===== GAME VARIABLES =====
+        let score = 0;
+        let messages = [
+            "Awesome! 🎉",
+            "Keep going! 💪",
+            "You're doing great! ⭐",
+            "Fantastic! 🌟",
+            "Amazing work! 🚀"
+        ];
+        let avatars = ["🎮", "😀", "😎", "🤖", "👾", "🦸", "🧙"];
+        let colors = ["#ff6b6b", "#4ecdc4", "#45b7d1", "#ffa502", "#a29bfe", "#fd79a8"];
+        
+        // ===== EVENT LISTENERS =====
+        
+        // Change message button
+        changeMessageBtn.addEventListener("click", function() {
+            let randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            messageDiv.textContent = randomMessage;
+            messageDiv.classList.add("success");
+            console.log("Message changed to:", randomMessage);
+        });
+        
+        // Increase score button
+        increaseScoreBtn.addEventListener("click", function() {
+            score += 10;
+            scoreDisplay.textContent = "Score: " + score;
+            console.log("Score increased to:", score);
+            
+            // Change message based on score
+            if (score >= 100) {
+                messageDiv.textContent = "🏆 High Score Champion!";
+                messageDiv.classList.remove("success");
+                messageDiv.classList.add("warning");
+            }
+        });
+        
+        // ===== 🎯 YOUR TURN! =====
+        // Make the remaining buttons work!
+        //
+        // STEP 1: Uncomment ONE button function below
+        // STEP 2: Save and refresh the page
+        // STEP 3: Test the button - does it work?
+        // STEP 4: Move to the next button function
+        //
+        // Decrease score button
+        // decreaseScoreBtn.addEventListener("click", function() {
+        //     score -= 10;
+        //     if (score < 0) score = 0;  // Don't go negative
+        //     scoreDisplay.textContent = "Score: " + score;
+        //     console.log("Score decreased to:", score);
+        // });
+        
+        // Reset button
+        // resetBtn.addEventListener("click", function() {
+        //     score = 0;
+        //     scoreDisplay.textContent = "Score: " + score;
+        //     messageDiv.textContent = "Reset complete! 🔄";
+        //     messageDiv.className = "";  // Remove all classes
+        //     playerAvatar.textContent = "🎮";
+        //     console.log("Game reset!");
+        // });
+        
+        // Change color button
+        // changeColorBtn.addEventListener("click", function() {
+        //     let randomColor = colors[Math.floor(Math.random() * colors.length)];
+        //     playerAvatar.style.backgroundColor = randomColor;
+        //     console.log("Color changed to:", randomColor);
+        // });
+        
+        // Change avatar button
+        // changeAvatarBtn.addEventListener("click", function() {
+        //     let randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+        //     playerAvatar.textContent = randomAvatar;
+        //     console.log("Avatar changed to:", randomAvatar);
+        // });
+        
+        // BONUS: Click on avatar to spin it
+        // playerAvatar.addEventListener("click", function() {
+        //     this.style.transform = "rotate(360deg) scale(1.2)";
+        //     setTimeout(() => {
+        //         this.style.transform = "";
+        //     }, 300);
+        // });
+        
+        // ===== DEMONSTRATION OF DOM MANIPULATION =====
+        console.log("=== DOM Elements ===");
+        console.log("Message element:", messageDiv);
+        console.log("Score element:", scoreDisplay);
+        console.log("Initial score:", score);
+        
+        // Show how to modify styles
+        console.log("\n=== Style Manipulation ===");
+        console.log("You can change CSS with JavaScript:");
+        console.log("element.style.backgroundColor = 'red';");
+        console.log("element.style.fontSize = '24px';");
+        console.log("element.style.display = 'none';");
+        
+    </script>
+</body>
+</html>
