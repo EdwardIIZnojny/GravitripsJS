@@ -133,50 +133,52 @@
         // STEP 3: In console, type: calculateBonus()
         // STEP 4: You should see your score doubled!
         
-        // function calculateBonus() {
-        //     let bonus = gameScore * 2;
-        //     console.log("💰 Bonus calculated:", bonus);
-        //     return bonus;
-        // }
+     function calculateBonus() {
+            let bonus = gameScore * 2;
+            console.log("💰 Bonus calculated:", bonus);
+            return bonus;
+        }
         //
         // ✅ TASK COMPLETE: When you can call calculateBonus() in console!
         
         // 2. Create a function called checkHighScore(score)
         //    It should check if score > 100 and return true/false
         
-        // function checkHighScore(score) {
-        //     if (score > 100) {
-        //         console.log("🏆 New high score!");
-        //         return true;
-        //     } else {
-        //         console.log("Keep playing!");
-        //         return false;
-        //     }
-        // }
+         function checkHighScore(score) {
+             if (score > 100) {
+             console.log("🏆 New high score!");
+                 return true;
+             } else {
+                 console.log("Keep playing!");
+                 return false;
+             }
+        }
         
         // 3. Test your functions:
-        // let bonus = calculateBonus();
-        // let isHigh = checkHighScore(gameScore);
+        let bonus = calculateBonus();
+        let isHigh = checkHighScore(gameScore);
         
         // ===== DIFFERENT FUNCTION SYNTAXES =====
         
         // Traditional function
         function greet1(name) {
+            name = "Player";
             return "Hello, " + name;
         }
         
         // Arrow function (modern way)
         const greet2 = (name) => {
+            name = "Player";
             return "Hello, " + name;
         };
         
         // Short arrow function (one line)
-        const greet3 = (name) => "Hello, " + name;
+        const greet3 = (name = "Player") => "Hello, " + name;
         
         console.log("\n=== Function Syntaxes ===");
-        console.log(greet1("Player"));
-        console.log(greet2("Player"));
-        console.log(greet3("Player"));
+        console.log(greet1());
+        console.log(greet2());
+        console.log(greet3());
         
     </script>
 </body>
